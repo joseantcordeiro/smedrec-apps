@@ -1,0 +1,29 @@
+// Better-T-Stack configuration file
+// safe to delete
+
+{
+  "$schema": "https://better-t-stack.dev/schema.json",
+  "version": "2.25.8",
+  "createdAt": "2025-07-14T12:58:31.539Z",
+  "database": "none",
+  "orm": "none",
+  "backend": "none",
+  "runtime": "none",
+  "frontend": [
+    "tanstack-start",
+    "native-nativewind"
+  ],
+  "addons": [
+    "biome",
+    "husky",
+    "starlight",
+    "tauri",
+    "turborepo"
+  ],
+  "examples": [],
+  "auth": false,
+  "packageManager": "bun",
+  "dbSetup": "none",
+  "api": "none",
+  "webDeploy": "none"
+}
