@@ -8,7 +8,6 @@ import {
 import Loader from "@/components/loader";
 import { seo } from "@/lib/seo";
 import { Providers } from "@/providers";
-import Header from "../components/header";
 import appCss from "../index.css?url";
 
 export type RouterAppContext = {};
@@ -52,7 +51,6 @@ function RootDocument() {
 			<body>
 				<Providers>
 					<div className="grid h-svh grid-rows-[auto_1fr]">
-						<Header />
 						{isFetching ? <Loader /> : <Outlet />}
 					</div>
 				</Providers>
