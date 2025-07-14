@@ -61,7 +61,7 @@ export function Providers({ children }: { children: ReactNode }) {
 						}}
 						apiKey={{
 							metadata: {
-								environment: process.env.ENVIRONMENT!,
+								environment: process.env.ENVIRONMENT || "development",
 								version: "v1",
 							},
 						}}

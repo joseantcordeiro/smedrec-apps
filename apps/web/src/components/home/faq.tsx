@@ -1,11 +1,11 @@
 import { FAQSection } from "./faq-section";
 
 export const FAQ = () => {
-  return (
-    <section id="faq" className="container py-24 sm:py-32">
-      <div className="flex w-full min-h-screen justify-center items-start bg-background text-foreground">
-        <FAQSection />
-      </div>
-    </section>
-  );
+	return (
+		<section id="faq" className="container py-24 sm:py-32">
+			<div className="flex min-h-screen w-full items-start justify-center bg-background text-foreground">
+				<FAQSection />
+			</div>
+		</section>
+	);
 };
