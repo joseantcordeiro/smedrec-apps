@@ -5,9 +5,9 @@ import {
 	Scripts,
 	useRouterState,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Loader from "@/components/loader";
-import { Toaster } from "@/components/ui/sonner";
+import { seo } from "@/lib/seo";
+import { Providers } from "@/providers";
 import Header from "../components/header";
 import appCss from "../index.css?url";
 
@@ -23,9 +23,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				name: "viewport",
 				content: "width=device-width, initial-scale=1",
 			},
-			{
-				title: "My App",
-			},
+			...seo({
+				title:
+					"Smart Medical Record | Opensource Medical institutions management FHIR compatible",
+				description:
+					"Smart Medical Record is a type-safe, client-first, full-stack AI FHIR framework. ",
+			}),
 		],
 		links: [
 			{
@@ -47,12 +50,12 @@ function RootDocument() {
 				<HeadContent />
 			</head>
 			<body>
-				<div className="grid h-svh grid-rows-[auto_1fr]">
-					<Header />
-					{isFetching ? <Loader /> : <Outlet />}
-				</div>
-				<Toaster richColors />
-				<TanStackRouterDevtools position="bottom-left" />
+				<Providers>
+					<div className="grid h-svh grid-rows-[auto_1fr]">
+						<Header />
+						{isFetching ? <Loader /> : <Outlet />}
+					</div>
+				</Providers>
 				<Scripts />
 			</body>
 		</html>
