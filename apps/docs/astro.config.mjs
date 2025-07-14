@@ -7,12 +7,12 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: "My Docs",
+			title: "SMEDREC DOCS",
 			social: [
 				{
 					icon: "github",
 					label: "GitHub",
-					href: "https://github.com/withastro/starlight",
+					href: "https://github.com/smedrec/smedrec-apps",
 				},
 			],
 			sidebar: [
@@ -24,8 +24,8 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "Reference",
-					autogenerate: { directory: "reference" },
+					label: "Apps",
+					autogenerate: { directory: "apps" },
 				},
 			],
 		}),
