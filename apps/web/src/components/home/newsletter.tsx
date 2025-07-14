@@ -1,4 +1,4 @@
-import { NewsletterSignup } from "@/components/home/newsletter-signup";
+import { NewsletterSignup } from "./newsletter-signup";
 
 export const Newsletter = () => {
 	const handleSubmit = async (email: string): Promise<boolean> => {
@@ -20,7 +20,7 @@ export const Newsletter = () => {
 			);
 
 			if (!result.ok) {
-				throw new Error("Failed to send email");
+				throw new Error("Failed to subscribe to newsletter");
 			}
 
 			return true;

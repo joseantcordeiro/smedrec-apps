@@ -6,8 +6,8 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
-import { STALE_TIMES } from "@/lib/constants";
 import { authClient } from "./lib/auth";
+import { STALE_TIMES } from "./lib/constants";
 
 // Create a query client with optimized settings
 const queryClient = new QueryClient({
