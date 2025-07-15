@@ -9,15 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
 import { Route as legalTosRouteImport } from './routes/(legal)/tos'
 import { Route as legalPrivacyPolicyRouteImport } from './routes/(legal)/privacy-policy'
+import { Route as AppSettingsSecurityRouteImport } from './routes/app/settings/security'
+import { Route as AppSettingsOrganizationRouteImport } from './routes/app/settings/organization'
+import { Route as AppSettingsAccountRouteImport } from './routes/app/settings/account'
 
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AuthPathnameRoute = AuthPathnameRouteImport.update({
   id: '/auth/$pathname',
@@ -34,41 +49,93 @@ const legalPrivacyPolicyRoute = legalPrivacyPolicyRouteImport.update({
   path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSettingsSecurityRoute = AppSettingsSecurityRouteImport.update({
+  id: '/settings/security',
+  path: '/settings/security',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingsOrganizationRoute = AppSettingsOrganizationRouteImport.update({
+  id: '/settings/organization',
+  path: '/settings/organization',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppSettingsAccountRoute = AppSettingsAccountRouteImport.update({
+  id: '/settings/account',
+  path: '/settings/account',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/privacy-policy': typeof legalPrivacyPolicyRoute
   '/tos': typeof legalTosRoute
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/app/': typeof AppIndexRoute
+  '/app/settings/account': typeof AppSettingsAccountRoute
+  '/app/settings/organization': typeof AppSettingsOrganizationRoute
+  '/app/settings/security': typeof AppSettingsSecurityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy-policy': typeof legalPrivacyPolicyRoute
   '/tos': typeof legalTosRoute
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/app': typeof AppIndexRoute
+  '/app/settings/account': typeof AppSettingsAccountRoute
+  '/app/settings/organization': typeof AppSettingsOrganizationRoute
+  '/app/settings/security': typeof AppSettingsSecurityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/(legal)/privacy-policy': typeof legalPrivacyPolicyRoute
   '/(legal)/tos': typeof legalTosRoute
   '/auth/$pathname': typeof AuthPathnameRoute
+  '/app/': typeof AppIndexRoute
+  '/app/settings/account': typeof AppSettingsAccountRoute
+  '/app/settings/organization': typeof AppSettingsOrganizationRoute
+  '/app/settings/security': typeof AppSettingsSecurityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy-policy' | '/tos' | '/auth/$pathname'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/privacy-policy'
+    | '/tos'
+    | '/auth/$pathname'
+    | '/app/'
+    | '/app/settings/account'
+    | '/app/settings/organization'
+    | '/app/settings/security'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy-policy' | '/tos' | '/auth/$pathname'
+  to:
+    | '/'
+    | '/privacy-policy'
+    | '/tos'
+    | '/auth/$pathname'
+    | '/app'
+    | '/app/settings/account'
+    | '/app/settings/organization'
+    | '/app/settings/security'
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/(legal)/privacy-policy'
     | '/(legal)/tos'
     | '/auth/$pathname'
+    | '/app/'
+    | '/app/settings/account'
+    | '/app/settings/organization'
+    | '/app/settings/security'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   legalPrivacyPolicyRoute: typeof legalPrivacyPolicyRoute
   legalTosRoute: typeof legalTosRoute
   AuthPathnameRoute: typeof AuthPathnameRoute
@@ -76,12 +143,26 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/auth/$pathname': {
       id: '/auth/$pathname'
@@ -104,11 +185,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof legalPrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/settings/security': {
+      id: '/app/settings/security'
+      path: '/settings/security'
+      fullPath: '/app/settings/security'
+      preLoaderRoute: typeof AppSettingsSecurityRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/settings/organization': {
+      id: '/app/settings/organization'
+      path: '/settings/organization'
+      fullPath: '/app/settings/organization'
+      preLoaderRoute: typeof AppSettingsOrganizationRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/settings/account': {
+      id: '/app/settings/account'
+      path: '/settings/account'
+      fullPath: '/app/settings/account'
+      preLoaderRoute: typeof AppSettingsAccountRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppSettingsAccountRoute: typeof AppSettingsAccountRoute
+  AppSettingsOrganizationRoute: typeof AppSettingsOrganizationRoute
+  AppSettingsSecurityRoute: typeof AppSettingsSecurityRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppSettingsAccountRoute: AppSettingsAccountRoute,
+  AppSettingsOrganizationRoute: AppSettingsOrganizationRoute,
+  AppSettingsSecurityRoute: AppSettingsSecurityRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
   legalPrivacyPolicyRoute: legalPrivacyPolicyRoute,
   legalTosRoute: legalTosRoute,
   AuthPathnameRoute: AuthPathnameRoute,

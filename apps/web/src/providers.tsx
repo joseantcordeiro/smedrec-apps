@@ -66,7 +66,7 @@ export function Providers({ children }: { children: ReactNode }) {
 							},
 						}}
 						settings={{
-							url: "/dashboard/settings/account",
+							url: "/app/settings/account",
 						}}
 						navigate={(href) => router.navigate({ href })}
 						replace={(href) => router.navigate({ href, replace: true })}

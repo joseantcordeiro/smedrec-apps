@@ -27,11 +27,10 @@ export function Footer() {
 						</h1>
 
 						<p className="mt-5 text-sm dark:text-gray-400">
-							© {new Date().getFullYear()} José Cordeiro. All rights reserved.
+							© {new Date().getFullYear()} José Cordeiro.
 						</p>
 						<p className="mt-5 text-sm dark:text-gray-400">
-							Licensed under the MIT License (MIT). See LICENSE in the repo root
-							for license information.
+							Licensed under the MIT License (MIT)
 						</p>
 					</div>
 					<div className="grid grid-cols-2 gap-8 md:grid-cols-4">

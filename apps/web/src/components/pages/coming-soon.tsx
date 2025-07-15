@@ -1,6 +1,6 @@
 import { IconPlanet } from "@tabler/icons-react";
 
-export default function ComingSoon() {
+function ComingSoon() {
 	return (
 		<div className="h-svh">
 			<div className="m-auto flex h-full w-full flex-col items-center justify-center gap-2">
@@ -14,3 +14,5 @@ export default function ComingSoon() {
 		</div>
 	);
 }
+
+export { ComingSoon };
