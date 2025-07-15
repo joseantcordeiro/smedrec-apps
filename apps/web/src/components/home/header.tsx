@@ -1,6 +1,6 @@
-import { GitHubIcon, UserButton } from "@daveyplate/better-auth-ui";
+import { GitHubIcon } from "@daveyplate/better-auth-ui";
 import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { LayoutDashboard, LogIn, Menu } from "lucide-react";
 import { useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -11,7 +11,8 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useSession } from "@/hooks/auth-hooks";
+import { cn } from "@/lib/utils";
 import { ModeToggle } from "../mode-toggle";
 
 interface RouteProps {
@@ -36,9 +37,9 @@ const routeList: RouteProps[] = [
 
 export function Header() {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const isMobile = useIsMobile();
+	const { session } = useSession();
 	return (
-		<header className="sticky top-0 z-50 border-b bg-background/60 px-4 py-3 backdrop-blur">
+		<header className="sticky top-0 z-50 border-b px-4 py-3 backdrop-blur">
 			<div className="container mx-auto flex items-center justify-between">
 				<Link to="/" className="flex items-center gap-2">
 					<svg
@@ -124,7 +125,20 @@ export function Header() {
 					</a>
 
 					<ModeToggle />
-					<UserButton size={isMobile ? "icon" : "sm"} className="gap-2 px-3" />
+					{session ? (
+						<Link to="/app" className={cn(buttonVariants(), "hidden lg:flex")}>
+							<LayoutDashboard className="me-2 h-4 w-4" />
+							<span>Dashboard</span>
+						</Link>
+					) : (
+						<Link
+							to="/auth/sign-in"
+							className={cn(buttonVariants(), "hidden lg:flex")}
+						>
+							<LogIn className="me-2 h-4 w-4" />
+							<span>Sign In</span>
+						</Link>
+					)}
 				</div>
 			</div>
 		</header>

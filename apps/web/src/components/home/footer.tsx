@@ -4,7 +4,7 @@ import { Icons } from "@/components/icons";
 
 export function Footer() {
 	return (
-		<footer className=" bg-background px-4 py-12 md:px-6">
+		<footer className="px-4 py-12 md:px-6">
 			<div className="container mx-auto">
 				<div className="flex flex-col justify-between md:flex-row">
 					<div className="mb-8 md:mb-0">

@@ -4,20 +4,17 @@ export const Newsletter = () => {
 	const handleSubmit = async (email: string): Promise<boolean> => {
 		// Handle form submission
 		try {
-			const result = await fetch(
-				`${process.env.PUBLIC_API_URL}/newsletter/subscribe`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						email: email,
-						list: "main",
-						metadata: [{ pathname: "home" }],
-					}),
+			const result = await fetch("http://localhost:8801/newsletter/subscribe", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
 				},
-			);
+				body: JSON.stringify({
+					email: email,
+					list: "main",
+					metadata: [{ pathname: "home" }],
+				}),
+			});
 
 			if (!result.ok) {
 				throw new Error("Failed to subscribe to newsletter");
