@@ -21,4 +21,6 @@ export const {
 	useDeletePasskey,
 	useAuthQuery,
 	useAuthMutation,
+	useActiveOrganization,
+	useListOrganizations,
 } = authHooks;

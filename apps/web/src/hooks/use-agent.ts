@@ -36,7 +36,7 @@ function useAgent(agentId: string, options = {}): UseAgentResult {
 	});
 
 	return {
-		data: queryResult.data,
+		data: queryResult.data as GetAgentResponse,
 		isLoading: queryResult.isLoading,
 		isError: queryResult.isError,
 		error: queryResult.error,

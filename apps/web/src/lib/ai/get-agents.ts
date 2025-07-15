@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { AgentArrayItem } from "@/types";
 import { ai } from "./client";
-
-import type { AgentArrayItem } from "./types";
 
 const getAgents = createServerFn({ method: "GET" }).handler(async () => {
 	try {

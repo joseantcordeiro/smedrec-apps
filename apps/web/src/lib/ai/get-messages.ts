@@ -1,5 +1,4 @@
 import { createServerFn } from "@tanstack/react-start";
-import type { CoreMessage } from "ai";
 import { ai } from "@/lib/ai/client";
 
 interface GetMessagesParams {

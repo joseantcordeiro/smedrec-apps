@@ -1,6 +1,13 @@
 import * as crypto from "node:crypto";
-import { Link, useLocation } from "@tanstack/react-router";
-import { Book, Bot, Github, TerminalIcon, Users } from "lucide-react";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import {
+	Book,
+	Bot,
+	Github,
+	RefreshCcw,
+	TerminalIcon,
+	Users,
+} from "lucide-react";
 import { useMemo } from "react";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -17,16 +24,21 @@ import {
 } from "@/components/ui/sidebar";
 import { useAgents } from "@/hooks/use-agents";
 import { useVersionString } from "@/hooks/use-version";
-import { authClient } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { SectionHeader, SidebarSection } from "./tiny-components";
 
 //import clientLogger from '../../lib/logger'
 
 import type { GetAgentResponse } from "@mastra/client-js";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import type { Organization } from "better-auth/plugins/organization";
+import {
+	useActiveOrganization,
+	useListOrganizations,
+} from "@/hooks/auth-hooks";
 import { i18n } from "@/lib/configs/i18n";
 import type { LocaleType } from "@/types";
+import { Button } from "../ui/button";
 
 type Agent = GetAgentResponse & { id: string };
 
@@ -104,6 +116,28 @@ const OrganizationsListSection = ({
 	isLoadingOrganizations: boolean;
 	activeOrganizationId: string | undefined;
 }) => {
+	const navigate = useNavigate();
+
+	async function setActiveOrganization(id: string) {
+		try {
+			const result = await fetch(
+				`http://localhost:8801/organizations/${id}/set-active`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			);
+
+			if (!result.ok) {
+				throw new Error("Failed to update organization");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	return (
 		<>
 			<div className="flex items-center px-4 pt-1 pb-0 text-muted-foreground">
@@ -131,6 +165,15 @@ const OrganizationsListSection = ({
 									<SidebarMenuButton
 										isActive={active}
 										className="my-1 h-full justify-between rounded-md px-2 py-2"
+										onClick={async () => {
+											if (active) {
+												navigate({
+													to: "/app/staff",
+												});
+											} else {
+												await setActiveOrganization(organization.id);
+											}
+										}}
 									>
 										{/* Name */}
 										<span className="max-w-24 truncate text-base">
@@ -185,6 +228,8 @@ export function AppSidebar({
 	const location = useLocation();
 	const version = useVersionString(); // Get api version
 
+	const queryClient = useQueryClient();
+
 	const locale = "en" as LocaleType;
 	const direction = i18n.localeDirection[locale];
 	const isRTL = direction === "rtl";
@@ -198,8 +243,8 @@ export function AppSidebar({
 		data: organizationsData,
 		isPending: isLoadingOrganizations,
 		error: organizationsError,
-	} = authClient.useListOrganizations();
-	const { data: activeOrganization } = authClient.useActiveOrganization();
+	} = useListOrganizations();
+	const { data: activeOrganization } = useActiveOrganization();
 
 	const agents = useMemo(() => agentsData || [], [agentsData]);
 	const organizations = useMemo(
@@ -262,6 +307,14 @@ export function AppSidebar({
 					{agentLoadError && (
 						<div className="px-4 py-2 text-red-500 text-xs">
 							{agentLoadError}
+							<Button
+								variant="ghost"
+								size="icon"
+								className="size-8 rounded-full"
+								onClick={() => queryClient.invalidateQueries(["agents"])}
+							>
+								<RefreshCcw className="me-2 h-4 w-4" />
+							</Button>
 						</div>
 					)}
 					{isLoadingAgents && !agentLoadError && (

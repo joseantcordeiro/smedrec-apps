@@ -15,6 +15,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
 import { Route as legalTosRouteImport } from './routes/(legal)/tos'
 import { Route as legalPrivacyPolicyRouteImport } from './routes/(legal)/privacy-policy'
+import { Route as AppStaffIndexRouteImport } from './routes/app/staff/index'
 import { Route as AppSettingsSecurityRouteImport } from './routes/app/settings/security'
 import { Route as AppSettingsOrganizationRouteImport } from './routes/app/settings/organization'
 import { Route as AppSettingsAccountRouteImport } from './routes/app/settings/account'
@@ -49,6 +50,11 @@ const legalPrivacyPolicyRoute = legalPrivacyPolicyRouteImport.update({
   path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppStaffIndexRoute = AppStaffIndexRouteImport.update({
+  id: '/staff/',
+  path: '/staff/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppSettingsSecurityRoute = AppSettingsSecurityRouteImport.update({
   id: '/settings/security',
   path: '/settings/security',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/app/settings/account': typeof AppSettingsAccountRoute
   '/app/settings/organization': typeof AppSettingsOrganizationRoute
   '/app/settings/security': typeof AppSettingsSecurityRoute
+  '/app/staff': typeof AppStaffIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/app/settings/account': typeof AppSettingsAccountRoute
   '/app/settings/organization': typeof AppSettingsOrganizationRoute
   '/app/settings/security': typeof AppSettingsSecurityRoute
+  '/app/staff': typeof AppStaffIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/app/settings/account': typeof AppSettingsAccountRoute
   '/app/settings/organization': typeof AppSettingsOrganizationRoute
   '/app/settings/security': typeof AppSettingsSecurityRoute
+  '/app/staff/': typeof AppStaffIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/app/settings/account'
     | '/app/settings/organization'
     | '/app/settings/security'
+    | '/app/staff'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/app/settings/account'
     | '/app/settings/organization'
     | '/app/settings/security'
+    | '/app/staff'
   id:
     | '__root__'
     | '/'
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/app/settings/account'
     | '/app/settings/organization'
     | '/app/settings/security'
+    | '/app/staff/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -185,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof legalPrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/staff/': {
+      id: '/app/staff/'
+      path: '/staff'
+      fullPath: '/app/staff'
+      preLoaderRoute: typeof AppStaffIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/app/settings/security': {
       id: '/app/settings/security'
       path: '/settings/security'
@@ -214,6 +233,7 @@ interface AppRouteRouteChildren {
   AppSettingsAccountRoute: typeof AppSettingsAccountRoute
   AppSettingsOrganizationRoute: typeof AppSettingsOrganizationRoute
   AppSettingsSecurityRoute: typeof AppSettingsSecurityRoute
+  AppStaffIndexRoute: typeof AppStaffIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -221,6 +241,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSettingsAccountRoute: AppSettingsAccountRoute,
   AppSettingsOrganizationRoute: AppSettingsOrganizationRoute,
   AppSettingsSecurityRoute: AppSettingsSecurityRoute,
+  AppStaffIndexRoute: AppStaffIndexRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(

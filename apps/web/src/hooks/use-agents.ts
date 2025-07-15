@@ -7,7 +7,7 @@ import { useNetworkStatus } from "@/hooks/use-network-status";
 import { getAgents } from "@/lib/ai/get-agents";
 import { STALE_TIMES } from "@/lib/constants";
 
-import type { AgentArrayItem } from "@/types/ai";
+import type { AgentArrayItem } from "@/types";
 
 interface UseAgentsResult {
 	data: AgentArrayItem[] | undefined;
@@ -25,7 +25,10 @@ function useAgents(options = {}): UseAgentsResult {
 
 	const queryResult = useQuery({
 		queryKey: ["agents"],
-		queryFn: async () => queryAgents(),
+		queryFn: async () => {
+			const result = await queryAgents();
+			return result;
+		},
 		staleTime: STALE_TIMES.RARE,
 		refetchInterval: !network.isOffline ? STALE_TIMES.RARE : false,
 		refetchIntervalInBackground: false,
@@ -37,7 +40,7 @@ function useAgents(options = {}): UseAgentsResult {
 	});
 
 	return {
-		data: queryResult.data,
+		data: queryResult.data as AgentArrayItem[],
 		isLoading: queryResult.isLoading,
 		isError: queryResult.isError,
 		error: queryResult.error,
